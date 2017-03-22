@@ -20,7 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
-    <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.1</TypeScriptToolsVersion>
     <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -228,7 +228,9 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\MicrosoftAjax\AjaxMin.targets" />
+  <!--<Import Project="$(MSBuildExtensionsPath)\Microsoft\MicrosoftAjax\AjaxMin.targets" />-->
+  <Import Project="..\packages\AjaxMin.5.14.5506.26202\tools\net35\AjaxMin.targets" />
+  
   <Target Name="AfterBuild">
     <ItemGroup>
       <JS Include="Plugins\Extensions\Editor\**\*.js" Exclude="Plugins\Extensions\Editor\AMVESourceLoader.js;Plugins\Extensions\Editor\**\*.min.js" />
@@ -236,9 +238,9 @@
     <ItemGroup>
       <CSS Include="Plugins\Skins\amve\**\*.css" Exclude="Plugins\Skins\amve\**\*.min.css" />
     </ItemGroup>
-    <AjaxMin Switches="-global:jQuery,$" JsSourceFiles="@(JS)" JsCombinedFileName="Plugins\Extensions\Editor\amve.min.js" CssSourceFiles="@(CSS)" CssCombinedFileName="Plugins\Skins\amve\amve.min.css" />
+    <AjaxMin SourceMapType="V3" Switches="-global:jQuery,$" JsSourceFiles="@(JS)" JsCombinedFileName="Plugins\Extensions\Editor\amve.min.js" CssSourceFiles="@(CSS)" CssCombinedFileName="Plugins\Skins\amve\amve.min.css" />
     <ItemGroup>
-      <MinFiles Include="Plugins\Extensions\Editor\amve.min.js;Plugins\Skins\amve\amve.min.css" />
+      <MinFiles Include="Plugins\Extensions\Editor\amve.min.js;Plugins\Extensions\Editor\amve.min.js.map;Plugins\Skins\amve\amve.min.css" />
     </ItemGroup>
     <ItemGroup>
       <CSSFonts Include="Plugins\Skins\amve\fonts\*.*" />

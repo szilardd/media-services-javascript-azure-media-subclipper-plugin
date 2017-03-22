@@ -1160,9 +1160,7 @@ module AMVE {
 
                 var tnFreq = Math.round(that.checkClipDuration() / that.thumbnailCount);
 
-                getTn();
-
-                function getTn() {
+                const getTn = () => {
                     if (tnCount < that._thumbnailCount && lastTime <= endTime) {
                         that.player.currentTime(lastTime);
                         that.captureThumbnail(lastTime, function (thumbnail: ThumbnailData) {
@@ -1182,6 +1180,8 @@ module AMVE {
                         that.isThumbnailsGenerating = false;
                     }
                 }
+
+                getTn();
             }
         }
 
