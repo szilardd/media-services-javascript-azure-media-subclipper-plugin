@@ -17,6 +17,17 @@ module amp {
         if (options && options['containerId']) {
             _amveCore = new AMVE.AMVECore(_player, options);
         }
+        // custom expose amve fully temporary
+        this._amveCore = _amveCore;
+        // expose public api
+        this.videoEditor = {
+            setMarkIn: (value: number) => {
+                this._amveCore._amveUX.clipData.markInPT = value;
+            },
+            setMarkOut: (value: number) => {
+                this._amveCore._amveUX.clipData.markOutPT = value;
+            }
+        }
     });
 }
 
