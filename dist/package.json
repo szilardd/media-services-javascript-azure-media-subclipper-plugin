@@ -1,0 +1,19 @@
+{
+  "name": "azure-media-subclipper-plugin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/szilardd/media-services-javascript-azure-media-subclipper-plugin.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/szilardd/media-services-javascript-azure-media-subclipper-plugin/issues"
+  },
+  "homepage": "https://github.com/szilardd/media-services-javascript-azure-media-subclipper-plugin#readme"
+}
