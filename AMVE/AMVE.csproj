@@ -179,6 +179,7 @@
     <TypeScriptCompile Include="Plugins\Extensions\Editor\Modules\Common.ts" />
     <TypeScriptCompile Include="Plugins\Extensions\Editor\Interfaces\IEventSource.ts" />
     <TypeScriptCompile Include="Plugins\Extensions\Editor\Modules\KeyboardShortcutConfig.ts" />
+    <TypeScriptCompile Include="Plugins\Extensions\Editor\Modules\SubmitDialogConfig.ts" />
     <TypeScriptCompile Include="Plugins\Extensions\Editor\Modules\ThumbnailData.ts" />
     <TypeScriptCompile Include="Plugins\Extensions\Editor\Modules\AMVEBottomControlBar.ts" />
     <TypeScriptCompile Include="Plugins\Extensions\Editor\Modules\AMVEMarkControlBar.ts" />

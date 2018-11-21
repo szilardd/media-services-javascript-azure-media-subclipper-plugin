@@ -32,10 +32,12 @@ module AMVE {
         private _numThumbnailsToDisplay: number = 3;
         private _currentThumbnailIndex: number = 0;
         private _selectedThumbnailIndex: number = 0;
+        private _config: SubmitDialogConfig;
 
-        constructor(amveUX: AMVEUX) {
+        constructor(amveUX: AMVEUX, config: SubmitDialogConfig) {
             var that = this;
             this._amveUX = amveUX;
+            this._config = config;
 
             this._submitDialogContainer =
                 this._amveUX.createElement(['amve-modal', 'amve-submitdlg-entry']);
@@ -49,13 +51,15 @@ module AMVE {
                 this._amveUX.createElement(['amve-submitdlg-entry-top']);
             this._submitDialogContent.appendChild(this._submitDialogTop);
 
-            this._submitDialogThumbnailsSpinner =
-                this._amveUX.createElement(['amve-submitdlg-entry-thumbnails-spinner']);
-            this._submitDialogContent.appendChild(this._submitDialogThumbnailsSpinner);
+            if (this._config.generateThumbnails) {
+                this._submitDialogThumbnailsSpinner =
+                    this._amveUX.createElement(['amve-submitdlg-entry-thumbnails-spinner']);
+                this._submitDialogContent.appendChild(this._submitDialogThumbnailsSpinner);
 
-            this._submitDialogThumbnailsContainer =
-                this._amveUX.createElement(['amve-submitdlg-entry-thumbnails']);
-            this._submitDialogContent.appendChild(this._submitDialogThumbnailsContainer);
+                this._submitDialogThumbnailsContainer =
+                    this._amveUX.createElement(['amve-submitdlg-entry-thumbnails']);
+                this._submitDialogContent.appendChild(this._submitDialogThumbnailsContainer);
+            }
 
             this._submitDialogMiddle =
                 this._amveUX.createElement(['amve-submitdlg-entry-middle']);
@@ -82,40 +86,43 @@ module AMVE {
                 this._amveUX.createElement(['amve-btn-control', 'amve-close-btn']);
             this._rightColTop.appendChild(this._submitDialogCloseBtn);
 
-            this._submitDialogThumbnailsLeftArrow =
-                this._amveUX.createElement(['amve-btn-control', 'amve-chevron-left', 'amve-thumbnails-leftarrow', 'amve-btn-disabled']);
-            this._submitDialogThumbnailsContainer.appendChild(this._submitDialogThumbnailsLeftArrow);
+            if (this._config.generateThumbnails) {
 
-            this._submitDialogThumbnails = new Array<HTMLImageElement>();
+                this._submitDialogThumbnailsLeftArrow =
+                    this._amveUX.createElement(['amve-btn-control', 'amve-chevron-left', 'amve-thumbnails-leftarrow', 'amve-btn-disabled']);
+                this._submitDialogThumbnailsContainer.appendChild(this._submitDialogThumbnailsLeftArrow);
 
-            for (var i = 0; i < this._numThumbnailsToDisplay; i++) {
-                var _thumbnail = <HTMLImageElement>this._amveUX.createElement(['amve-thumbnail'], 'img');
-                this._submitDialogThumbnailsContainer.appendChild(_thumbnail);
-                this._submitDialogThumbnails.push(_thumbnail);
+                this._submitDialogThumbnails = new Array<HTMLImageElement>();
 
-                /**
-                 * Selects the thumbnail and deselects the others if appropriate
-                 */
-                _thumbnail.addEventListener('click', function (evt: Event) {
-                    var targetTn = <HTMLImageElement>evt.currentTarget;
-                    that._submitDialogThumbnails.forEach(function (tn: HTMLImageElement, index: number, thumnails: Array<HTMLImageElement>) {
-                        if (tn != targetTn) {
-                            tn.classList.remove('amve-selected');
+                for (var i = 0; i < this._numThumbnailsToDisplay; i++) {
+                    var _thumbnail = <HTMLImageElement>this._amveUX.createElement(['amve-thumbnail'], 'img');
+                    this._submitDialogThumbnailsContainer.appendChild(_thumbnail);
+                    this._submitDialogThumbnails.push(_thumbnail);
+
+                    /**
+                     * Selects the thumbnail and deselects the others if appropriate
+                     */
+                    _thumbnail.addEventListener('click', function (evt: Event) {
+                        var targetTn = <HTMLImageElement>evt.currentTarget;
+                        that._submitDialogThumbnails.forEach(function (tn: HTMLImageElement, index: number, thumnails: Array<HTMLImageElement>) {
+                            if (tn != targetTn) {
+                                tn.classList.remove('amve-selected');
+                            }
+                        });
+                        if (targetTn.classList.contains('amve-selected')) {
+                            that._selectedThumbnailIndex = -1;
+                            _thumbnail.classList.remove('amve-selected');
+                        } else {
+                            targetTn.classList.add('amve-selected');
+                            that._selectedThumbnailIndex = that._currentThumbnailIndex;
                         }
                     });
-                    if (targetTn.classList.contains('amve-selected')) {
-                        that._selectedThumbnailIndex = -1;
-                        _thumbnail.classList.remove('amve-selected');
-                    } else {
-                        targetTn.classList.add('amve-selected');
-                        that._selectedThumbnailIndex = that._currentThumbnailIndex;
-                    }
-                });
-            }
+                }
 
-            this._submitDialogThumbnailsRightArrow =
-                this._amveUX.createElement(['amve-btn-control', 'amve-chevron-right', 'amve-thumbnails-rightarrow', 'amve-btn-disabled']);
-            this._submitDialogThumbnailsContainer.appendChild(this._submitDialogThumbnailsRightArrow);
+                this._submitDialogThumbnailsRightArrow =
+                    this._amveUX.createElement(['amve-btn-control', 'amve-chevron-right', 'amve-thumbnails-rightarrow', 'amve-btn-disabled']);
+                this._submitDialogThumbnailsContainer.appendChild(this._submitDialogThumbnailsRightArrow);
+            }
 
             this._submitDialogEntryTitle =
                 <HTMLInputElement>this._amveUX.createElement(['amve-submitdlg-entry-title'], 'input');
@@ -174,25 +181,27 @@ module AMVE {
                 that._amveUX.clipData.isClipCompleted = false;
             });
 
-            /**
-             * Shifts the range of thumnails displayed to the left when the left arrow is clicked
-             */
-            this._submitDialogThumbnailsLeftArrow.addEventListener('click', function () {
-                if (!that._submitDialogThumbnailsLeftArrow.classList.contains('amve-btn-disabled') && that._currentThumbnailIndex > 0) {
-                    that._currentThumbnailIndex--;
-                    renderThumbnails();
-                }
-            });
+            if (this._config.generateThumbnails) {
+                /**
+                 * Shifts the range of thumnails displayed to the left when the left arrow is clicked
+                 */
+                this._submitDialogThumbnailsLeftArrow.addEventListener('click', function () {
+                    if (!that._submitDialogThumbnailsLeftArrow.classList.contains('amve-btn-disabled') && that._currentThumbnailIndex > 0) {
+                        that._currentThumbnailIndex--;
+                        renderThumbnails();
+                    }
+                });
 
-            /**
-             * Shifts the range of thumnails displayed to the right when the right arrow is clicked
-             */
-            this._submitDialogThumbnailsRightArrow.addEventListener('click', function () {
-                if (!that._submitDialogThumbnailsRightArrow.classList.contains('amve-btn-disabled') && that._currentThumbnailIndex < (that._amveUX.thumbnails.length - 3)) {
-                    that._currentThumbnailIndex++;
-                    renderThumbnails();
-                }
-            });
+                /**
+                 * Shifts the range of thumnails displayed to the right when the right arrow is clicked
+                 */
+                this._submitDialogThumbnailsRightArrow.addEventListener('click', function () {
+                    if (!that._submitDialogThumbnailsRightArrow.classList.contains('amve-btn-disabled') && that._currentThumbnailIndex < (that._amveUX.thumbnails.length - 3)) {
+                        that._currentThumbnailIndex++;
+                        renderThumbnails();
+                    }
+                });
+            }
 
             /**
              * Submits the clip

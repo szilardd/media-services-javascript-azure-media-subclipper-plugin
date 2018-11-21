@@ -9,6 +9,7 @@
 /// <reference path='../Modules/AMVEBottomControlBar.ts' />
 /// <reference path='../Modules/AMVESubmitDialog.ts' />
 /// <reference path='../Modules/AMVESettingsDialog.ts' />
+/// <reference path='../Modules/SubmitDialogConfig.ts' />
 
 "use strict";
 
@@ -97,7 +98,7 @@ module AMVE {
                         this._markControlBar = new AMVEMarkControlBar(this);
                         this._scrubber = new AMVEScrubber(this);
                         this._bottomControlBar = new AMVEBottomControlBar(this);
-                        this._submitDlg = new AMVESubmitDialog(this);
+                        this._submitDlg = new AMVESubmitDialog(this, this._amveCore.submitDialogConfig);
                         this._settingsDlg = new AMVESettingsDialog(this);
                         this._animationsStyle = <HTMLStyleElement>document.createElement('style');
                         document.getElementsByTagName('head')[0].appendChild(this._animationsStyle);
@@ -861,7 +862,9 @@ module AMVE {
                     }
                     that._submitToggle = false;
                     that.player.currentTime(pt);
-                    that.generateThumbnails();
+                    if (that._amveCore.submitDialogConfig.generateThumbnails) {
+                        that.generateThumbnails();
+                    }
                 }, playerWidth, playerHeight);
             } else {
                 this._playerCoverImage.style.display = 'none';

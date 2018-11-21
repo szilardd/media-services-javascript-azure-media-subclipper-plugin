@@ -102,7 +102,15 @@ With the requisite references in place, we can now add the plugin registration t
             xap: 'tech-wrappers/Players/smf/SmoothStreamingPlayer.xap'
         },
         plugins: {
-            AMVE: { containerId: 'amve', customMetadataContainerId: 'custommetadata', clipdataCallback: onClipdataCallback, keyboardShortcutConfig: keyboadShortcutConfig }
+            AMVE: {
+                containerId: 'amve',
+                customMetadataContainerId: 'custommetadata',
+                clipdataCallback: onClipdataCallback,
+                keyboardShortcutConfig: keyboadShortcutConfig,
+                submitDialog: {
+                    generateThumbnails: true
+                }
+            }
         }
     };
 

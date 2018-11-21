@@ -5,6 +5,7 @@
 /// <reference path='../Modules/KeyboardShortcutConfig.ts' />
 /// <reference path='../Modules/ThumbnailData.ts' />
 /// <reference path='../Modules/AMVEUX.ts' />
+/// <reference path='../Modules/SubmitDialogConfig.ts' />
 
 module amp {
     /**
@@ -45,6 +46,7 @@ module AMVE {
         private _clipData: AMVEClipData;
         private _clipDataCallback: Function;
         private _shortcutConfig: KeyboardShortcutConfig;
+        private _submitDialogConfig: SubmitDialogConfig;
 
         constructor(player: amp.Player, options: Object) {
             if (!options['containerId']) {
@@ -62,6 +64,9 @@ module AMVE {
             this.customMetadataContainerId = options['customMetadataContainerId'];
             this._clipDataCallback = options['clipdataCallback'];
             this._shortcutConfig = options['keyboardShortcutConfig'];
+
+            const defaultSubmitDialogConfig: SubmitDialogConfig = { generateThumbnails: true };
+            this._submitDialogConfig = options['submitDialog'] || defaultSubmitDialogConfig;
 
             this._amveUX = new AMVEUX(this);
         }
@@ -99,6 +104,10 @@ module AMVE {
 
         public get keyboardShortcutConfig(): KeyboardShortcutConfig {
             return this._shortcutConfig;
+        }
+
+        public get submitDialogConfig(): SubmitDialogConfig {
+            return this._submitDialogConfig;
         }
     }
 }

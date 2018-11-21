@@ -235,7 +235,15 @@
         controls: true,
         poster: '',
         plugins: {
-            AMVE: { containerId: 'amve', customMetadataContainerId: 'custommetadata', clipdataCallback: onClipdataCallback, keyboardShortcutConfig: keyboadShortcutConfig }
+            AMVE: {
+                containerId: 'amve',
+                customMetadataContainerId: 'custommetadata',
+                clipdataCallback: onClipdataCallback,
+                keyboardShortcutConfig: keyboadShortcutConfig,
+                submitDialog: {
+                    generateThumbnails: true
+                }
+            }
         }
     };
 
