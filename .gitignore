@@ -193,3 +193,5 @@ ModelManifest.xml
 # Generated files
 .vs/
 AMVESample/AMVE.zip
+!dist/*.js
+!dist/*.css

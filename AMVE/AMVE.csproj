@@ -22,6 +22,7 @@
     <IISExpressUseClassicPipelineMode />
     <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -230,7 +231,6 @@
   -->
   <!--<Import Project="$(MSBuildExtensionsPath)\Microsoft\MicrosoftAjax\AjaxMin.targets" />-->
   <Import Project="..\packages\AjaxMin.5.14.5506.26202\tools\net35\AjaxMin.targets" />
-  
   <Target Name="AfterBuild">
     <ItemGroup>
       <JS Include="Plugins\Extensions\Editor\**\*.js" Exclude="Plugins\Extensions\Editor\AMVESourceLoader.js;Plugins\Extensions\Editor\**\*.min.js" />
@@ -253,7 +253,7 @@
     <Copy SourceFiles="@(MinFiles)" DestinationFolder="../AMVESample" />
     <Copy SourceFiles="@(CSSFonts)" DestinationFolder="../AMVESample/fonts" />
     <Copy SourceFiles="@(Docs)" DestinationFolder="../AMVESample" />
-	<Copy SourceFiles="@(MinFiles)" DestinationFolder="../dist" />
-	<Copy SourceFiles="@(CSSFonts)" DestinationFolder="../dist/fonts" />
+    <Copy SourceFiles="@(MinFiles)" DestinationFolder="../dist" />
+    <Copy SourceFiles="@(CSSFonts)" DestinationFolder="../dist/fonts" />
   </Target>
 </Project>
