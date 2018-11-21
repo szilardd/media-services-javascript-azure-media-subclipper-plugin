@@ -692,6 +692,17 @@ module AMVE {
             return box;
         }
 
+        public findPositionRelativeToParent(element: HTMLElement): Box {
+            return {
+                top: element.offsetTop,
+                right: element.offsetLeft + element.clientWidth,
+                bottom: element.offsetTop + element.clientHeight,
+                left: element.offsetLeft,
+                height: element.clientHeight,
+                width: element.clientWidth
+            };
+        }
+
         /**
          * Given a time in seconds, returns its percentage of the player's current source duration
          * Used for filling the scrubber timeline, etc.

@@ -256,10 +256,10 @@ module AMVE {
              * Positions and displays the volume control over the volume button
              */
             function positionAndDisplayVolume(): void {
-                var box = that._amveUX.findPosition(that._controlBarElement);
-
+                var box = that._amveUX.findPositionRelativeToParent(that._controlBarElement);
+               
                 that._volumeBar.style.display = 'block';
-                that._volumeBar.style.top = ((box.top - (that._volumeBar.clientHeight) - that._controlBarElement.clientHeight) - (that._volumeButton.clientHeight * 2) - 60) + 'px';
+                that._volumeBar.style.top = (box.top - that._volumeTrack.clientHeight) + 'px';
                 that._volumeBar.style.left = ((that._controlBarElement.clientWidth - that._volumeBar.clientWidth - (that._volumeButton.clientWidth / 2)) - 8) + 'px';
                 that._volumeButton.classList.remove('amve-muted');
 
