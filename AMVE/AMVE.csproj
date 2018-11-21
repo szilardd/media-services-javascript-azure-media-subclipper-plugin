@@ -253,5 +253,7 @@
     <Copy SourceFiles="@(MinFiles)" DestinationFolder="../AMVESample" />
     <Copy SourceFiles="@(CSSFonts)" DestinationFolder="../AMVESample/fonts" />
     <Copy SourceFiles="@(Docs)" DestinationFolder="../AMVESample" />
+	<Copy SourceFiles="@(MinFiles)" DestinationFolder="../dist" />
+	<Copy SourceFiles="@(CSSFonts)" DestinationFolder="../dist/fonts" />
   </Target>
 </Project>
